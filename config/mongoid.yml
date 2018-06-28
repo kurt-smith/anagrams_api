@@ -1,0 +1,22 @@
+# https://docs.mongodb.com/mongoid/master/tutorials/mongoid-installation/#anatomy-of-a-mongoid-config
+common: &default_settings
+  clients:
+    default:
+      uri: <%= binding.pry; App::Config::MONGODB_URI %>
+      options:
+        read:
+          mode: :primary
+        max_pool_size: <%= App::Config::DB_MAX_CONNECTIONS %>
+        min_pool_size: <%= App::Config::DB_MIN_CONNECTIONS %>
+        wait_queue_timeout: <%= App::Config::DB_WAIT_QUEUE_TIMEOUT %>
+        connect_timeout: <%= App::Config::DB_CONNECT_TIMEOUT %>
+        socket_timeout: <%= App::Config::DB_SOCKET_TIMEOUT %>
+
+development:
+  <<: *default_settings
+
+test:
+  <<: *default_settings
+
+production:
+  <<: *default_settings

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# script/test: Run test suite for application. Optionally pass in a path to an
+#              individual test file to run a single test.
+
+set -e
+
+# cd to project root
+cd "$(dirname "$0")/.."
+
+export RAILS_ENV="test" RACK_ENV="test" PROJECT_NAME="ibotta_anagrams"
+
+# Create Indexes
+docker-compose --project-name=$PROJECT_NAME run -e RAILS_ENV=$RAILS_ENV app rake db:drop
+docker-compose --project-name=$PROJECT_NAME run -e RAILS_ENV=$RAILS_ENV app rake db:create_indexes
+
+# run tests
+printf "\n===> Running tests ...\n"
+if [ -n "$1" ]; then
+  # pass arguments to test call. This is useful for calling a single test.
+  docker-compose --project-name=$PROJECT_NAME run -e RAILS_ENV=$RAILS_ENV -e --rm app rspec "$1"
+else
+  docker-compose --project-name=$PROJECT_NAME run -e RAILS_ENV=$RAILS_ENV -e --rm app rspec
+fi

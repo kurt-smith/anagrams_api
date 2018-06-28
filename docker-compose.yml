@@ -1,0 +1,20 @@
+version: '2.1'
+
+services:
+  mongo:
+    image: mongo:3.4.15
+    restart: always
+    expose:
+      - "27017"
+
+  app:
+    build: .
+    image: ibotta_anagrams
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/anagrams_development

@@ -1,0 +1,2 @@
+# Don't include tmp in docker image, so we don't get pid included on local builds
+tmp
