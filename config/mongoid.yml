@@ -2,7 +2,7 @@
 common: &default_settings
   clients:
     default:
-      uri: <%= binding.pry; App::Config::MONGODB_URI %>
+      uri: <%= App::Config::MONGODB_URI %>
       options:
         read:
           mode: :primary
