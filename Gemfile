@@ -3,9 +3,10 @@
 source 'https://rubygems.org'
 
 gem 'jbuilder', '~> 2.7'
-gem 'mongoid', '~> 7.0'
+gem 'mongoid', '~> 6.4'
+gem 'mongoid_paranoia', '~> 0.3'
 gem 'puma', '~> 3.11'
-gem 'rails', '~> 5.1'
+gem 'rails', '5.1.6'
 gem 'redis', '~> 4.0'
 gem 'sidekiq', '~> 5.1'
 

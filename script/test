@@ -11,8 +11,8 @@ cd "$(dirname "$0")/.."
 export RAILS_ENV="test" RACK_ENV="test" PROJECT_NAME="ibotta_anagrams"
 
 # Create Indexes
-docker-compose --project-name=$PROJECT_NAME run -e RAILS_ENV=$RAILS_ENV app rake db:drop
-docker-compose --project-name=$PROJECT_NAME run -e RAILS_ENV=$RAILS_ENV app rake db:create_indexes
+printf "\n===> Creating indexes ...\n"
+docker-compose --project-name=$PROJECT_NAME run -e RAILS_ENV=$RAILS_ENV app rake db:drop db:create_indexes
 
 # run tests
 printf "\n===> Running tests ...\n"
