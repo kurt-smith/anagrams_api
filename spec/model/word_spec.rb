@@ -19,7 +19,7 @@ describe Word, models: true do
           .within(1..255)
           .with_message('must have more than 1 and less than 255 characters')
       end
-      it { is_expected.to validate_uniqueness_of(:name).with_message('already exists in corpus') }
+      it { is_expected.to validate_uniqueness_of(:name).with_message('already exists in corpus: %{value}') }
     end
 
     describe 'characters' do

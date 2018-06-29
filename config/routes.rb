@@ -3,9 +3,12 @@
 Rails.application.routes.draw do
   resources :words, only: %i[create destroy], param: :word_name do
     collection do
-      delete '', to: 'words#destroy_all'
+      delete '', to: 'words#destroy_all', as: :all
     end
   end
 
   resources :anagrams, only: %i[show], param: :word_name
+
+  # catch all invalid routes
+  match '*unmatched_route', to: 'application#raise_not_found!', via: :all
 end
