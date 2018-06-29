@@ -32,6 +32,19 @@ describe 'Words Create API', type: :request, requests: true do
       expect(json['words'].first.keys).to contain_exactly(*JsonKeyHelper.word)
     end
 
+    it 'and persists unique words and returns 201' do
+      params = {
+        words: %w[unique unique]
+      }
+      post path, params: params.to_json, headers: headers
+      expect(response).to have_http_status 201
+      expect(json.keys).to_not include('errors')
+      expect(json.keys).to contain_exactly(*JsonKeyHelper.words)
+      expect(json['words'].count).to eq(1)
+      expect(json['words'].first.keys).to contain_exactly(*JsonKeyHelper.word)
+      expect(Word.count).to eq(1)
+    end
+
     it 'returns 422 when not array' do
       params = FactoryBot.build(:word_request, words: nil)
       post path, params: params.to_json, headers: headers

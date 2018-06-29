@@ -14,7 +14,7 @@ class WordsController < ApplicationController
   #
   # @param words [Array<String>] Array of strings to persist
   # @return [JSON] List of created records
-  # @note No words will be persisted if an error is returned
+  # @note No words will be persisted if an error is returned. Only unique words within params will be persisted.
   def create
     word_list = word_params[:words]&.uniq
     return errors(['invalid param type: array required'], 422) unless word_list.is_a?(Array)
