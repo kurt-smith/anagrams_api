@@ -14,14 +14,39 @@ class ApplicationController < ActionController::Base
     request.format = :json
   end
 
+  # @return [JSON] Error response
   def errors(errors, status)
     @errors = errors
     render('common/error', status: status)
   end
 
+  # @return [Word] Record found in corpus
+  # @note returns error if queried word is not found in database
   def load_word
     @word ||= Word.find_by!(name: params[:word_name])
   rescue StandardError
     errors(["Not found in corpus: #{params[:word_name]}"], 404)
+  end
+
+  # @return [Hash] Optional query params
+  def request_params
+    {
+      limit: params[:limit].presence&.to_i || 1_000,
+      offset: params[:offset].presence&.to_i || 1,
+      sort: sort_query_params
+    }.compact
+  end
+
+  # Optional sorting params for queries
+  # @note defaults to ascending order
+  def sort_query_params
+    case params[:sort].presence
+    when '+', 'asc', nil
+      :asc
+    when '-', 'desc'
+      :desc
+    else
+      :asc
+    end
   end
 end

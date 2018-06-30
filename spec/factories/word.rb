@@ -6,7 +6,7 @@ FactoryBot.define do
   end
 
   factory :word_request, class: Hash do
-    words { [Faker::Hacker.verb] }
+    words { [Faker::Hacker.unique.verb] }
 
     trait :multiple_words do
       words do
