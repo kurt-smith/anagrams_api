@@ -11,10 +11,10 @@ class Word
   field :proper_noun, type: Boolean, default: false
   field :characters, type: String, default: nil
 
-  scope :anagrams, ->(name) { where(characters: name.sort_characters) }
+  scope :anagrams, ->(name) { where(characters: Anagramify.sort(name)).excludes(name: name) }
 
   index({ name: -1 }, unique: true, name: 'unique_name_index')
-  index({ characters: -1 }, name: 'characters_index')
+  index({ name: -1, characters: -1 }, unique: true, name: 'unique_name_characters_index')
 
   validates :name, presence:   { message: 'is required' },
                    uniqueness: { conditions: -> { where(deleted_at: nil) },
@@ -29,10 +29,9 @@ class Word
 
   # Sort characters to store in ascending order
   # TODO: Benchmarking
-  # @return [String] All characters included in word in ascending order
-  # @note Only supports
+  # @return [String] All alphabet characters included in word in ascending order
   def sort_characters
-    self.characters = name.downcase.remove(/[^a-z]/).split(//).sort.join
+    self.characters = Anagramify.sort(name)
   rescue StandardError
     nil
   end
