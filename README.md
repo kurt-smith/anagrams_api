@@ -55,6 +55,19 @@ To start the application from project folder:
 1. Start App: `$ rails s`
 1. Access Sidekiq via browser: `$ open http://localhost:3000/sidekiq`
 
+### Testing
+
+With the services running, the provided test suite can be executed by running the following command:
+
+1. `$ ruby vendor/ibotta/anagram_test.rb`
+
+#### Rspec
+
+The project includes a test suite for all major functionality of the API.
+
+1. `script/test` (Docker)
+1. `bundle exec rspec` (Local)
+
 ### Environment Variables
 
 | Variable       |  Description   | Default                 |
