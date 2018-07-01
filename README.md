@@ -1,20 +1,88 @@
 Ibotta Anagram Project
 =========
 
+Live demo available at: https://ibotta-anagrams-api.herokuapp.com/
+
 #### Ruby 2.4.4
 #### Rails 5.1.6
 
 ---
 The project is to build an API that allows fast searches for [anagrams](https://en.wikipedia.org/wiki/Anagram). `dictionary.txt` is a text file containing every word in the English dictionary. Ingesting the file doesn’t need to be fast, and you can store as much data in memory as you like.
 
-The API you design should respond on the following endpoints as specified.
+### Endpoints
+```
+  curl https://ibotta-anagrams-api.herokuapp.com/
 
-- `POST /words.json`: Takes a JSON array of English-language words and adds them to the corpus (data store).
-- `GET /anagrams/:word.json`:
-  - Returns a JSON array of English-language words that are anagrams of the word passed in the URL.
-  - This endpoint should support an optional query param that indicates the maximum number of results to return.
-- `DELETE /words/:word.json`: Deletes a single word from the data store.
-- `DELETE /words.json`: Deletes all contents of the data store.
+  {
+    "app": "ibotta_anagrams",
+    "description": "API that allows fast searches for anagrams."
+  }
+```
+
+POST JSON data of English-language words and adds them to the corpus
+```
+  curl -i -H 'Content-Type:application/json' -X POST -d '{ "words": ["read", "dear"] }' https://ibotta-anagrams-api.herokuapp.com/words
+
+  {
+    "words": [
+      {
+        "id":"5b3951b71e540b000185a941",
+        "word":"read",
+        "proper_noun":false,
+        "created_at":"2018-07-01T22:12:07Z",
+        "updated_at":"2018-07-01T22:12:07Z"
+      },
+      {
+        "id":"5b3951b71e540b000185a942",
+        "word":"dear",
+        "proper_noun":false,
+        "created_at":"2018-07-01T22:12:07Z",
+        "updated_at":"2018-07-01T22:12:07Z"
+      }
+    ]
+  }
+
+  # An error is expected if the word exists in the corpus
+  curl -i -H 'Content-Type:application/json' -X POST -d '{ "words": ["read"] }' https://ibotta-anagrams-api.herokuapp.com/words
+
+  {
+    "errors": [
+      {
+        "word": [ "already exists in corpus: read" ]
+      }
+    ]
+  }
+```
+
+Return a JSON array of English-language words that are anagrams of the word passed in the URL.
+```
+  curl -i https://ibotta-anagrams-api.herokuapp.com/anagram/read
+
+  {
+    "meta":{
+      "limit":1000,
+      "offset":1,
+      "sort":"asc",
+      "total":2,
+      "word":"read"
+    },
+    "anagrams":[ "dare","dear" ]
+  }
+```
+
+Delete a single word from the data store.
+```
+  curl -i -X DELETE http://localhost:3000/words/read
+
+  HTTP/1.1 204 No Content
+```
+
+Delete all contents of the data store.
+```
+  curl -i -X DELETE http://localhost:3000/words
+
+  HTTP/1.1 204 No Content
+```
 
 *Note: This project is a work in progress*
 

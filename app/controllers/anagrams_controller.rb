@@ -22,4 +22,9 @@ class AnagramsController < ApplicationController
 
     render status: 200
   end
+
+  # Basic view for root
+  def root
+    render status: 200
+  end
 end
