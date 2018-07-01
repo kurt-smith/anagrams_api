@@ -20,10 +20,10 @@ class ApplicationController < ActionController::Base
     render('common/error', status: status)
   end
 
-  # @return [Word] Record found in corpus
+  # @return [Corpus] Record found in corpus
   # @note returns error if queried word is not found in database
   def load_word
-    @word ||= Word.find_by!(name: params[:word_name])
+    @word ||= Corpus.find_by!(word: params[:word_name])
   rescue StandardError
     errors(["Not found in corpus: #{params[:word_name]}"], 404)
   end

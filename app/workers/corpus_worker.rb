@@ -10,7 +10,7 @@ class CorpusWorker
   def perform(opts)
     options = opts.deep_symbolize_keys
     validate_options!(options)
-    Word.create!(name: options[:word])
+    Corpus.create!(word: options[:word])
   end
 
   protected

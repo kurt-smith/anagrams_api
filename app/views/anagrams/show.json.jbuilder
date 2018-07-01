@@ -2,5 +2,5 @@
 
 json.meta @meta
 json.anagrams do
-  json.array! @anagrams.collect { |a| a.name }
+  json.array! @anagrams.collect { |a| a.word }
 end

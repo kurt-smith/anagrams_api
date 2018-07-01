@@ -11,7 +11,7 @@ describe 'Words Delete API', type: :request, requests: true do
   end
 
   context '#destroy' do
-    let(:word) { FactoryBot.create(:word)[:name] }
+    let(:word) { FactoryBot.create(:corpus)[:word] }
     let(:path) { word_path(word) }
 
     it 'returns 204' do
@@ -21,7 +21,7 @@ describe 'Words Delete API', type: :request, requests: true do
     end
 
     it 'returns 404 when word doesn\'t exist' do
-      non_word = FactoryBot.build(:word)[:name]
+      non_word = FactoryBot.build(:corpus)[:word]
       path = word_path(non_word)
       delete path, headers: headers
       expect(response).to have_http_status 404

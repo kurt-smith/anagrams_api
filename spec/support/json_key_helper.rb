@@ -6,7 +6,7 @@ module JsonKeyHelper
   end
 
   def self.word
-    %w[id name proper_noun created_at updated_at]
+    %w[id word proper_noun created_at updated_at]
   end
 
   def self.request_params

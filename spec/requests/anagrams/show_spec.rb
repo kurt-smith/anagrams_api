@@ -16,7 +16,7 @@ describe 'Anagrams API', type: :request, requests: true do
     let(:word_list) { %w[read dare dear] }
     let(:anagram) { word_list - [word] }
 
-    before(:each) { word_list.each { |w| FactoryBot.create(:word, name: w) } }
+    before(:each) { word_list.each { |w| FactoryBot.create(:corpus, word: w) } }
 
     it 'returns 200' do
       get path, headers: headers

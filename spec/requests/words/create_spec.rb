@@ -14,7 +14,7 @@ describe 'Words Create API', type: :request, requests: true do
 
   context '#create' do
     it 'returns 201' do
-      params = FactoryBot.build(:word_request)
+      params = FactoryBot.build(:corpus_request)
       post path, params: params.to_json, headers: headers
       expect(response).to have_http_status 201
       expect(json.keys).to_not include('errors')
@@ -23,7 +23,7 @@ describe 'Words Create API', type: :request, requests: true do
     end
 
     it 'returns 201 for multiple words' do
-      params = FactoryBot.build(:word_request, :multiple_words)
+      params = FactoryBot.build(:corpus_request, :multiple_words)
       post path, params: params.to_json, headers: headers
       expect(response).to have_http_status 201
       expect(json.keys).to_not include('errors')
@@ -42,11 +42,11 @@ describe 'Words Create API', type: :request, requests: true do
       expect(json.keys).to contain_exactly(*JsonKeyHelper.words)
       expect(json['words'].count).to eq(1)
       expect(json['words'].first.keys).to contain_exactly(*JsonKeyHelper.word)
-      expect(Word.count).to eq(1)
+      expect(Corpus.count).to eq(1)
     end
 
     it 'returns 422 when not array' do
-      params = FactoryBot.build(:word_request, words: nil)
+      params = FactoryBot.build(:corpus_request, words: nil)
       post path, params: params.to_json, headers: headers
       expect(response).to have_http_status 422
       expect(json.keys).to include('errors')
@@ -54,12 +54,12 @@ describe 'Words Create API', type: :request, requests: true do
     end
 
     it 'returns 422 when word already exists' do
-      FactoryBot.create(:word, name: 'Ibotta')
-      params = FactoryBot.build(:word_request, words: %w[Ibotta cash back rewards])
+      FactoryBot.create(:corpus, word: 'Ibotta')
+      params = FactoryBot.build(:corpus_request, words: %w[Ibotta cash back rewards])
       post path, params: params.to_json, headers: headers
       expect(response).to have_http_status 422
       expect(json.keys).to include('errors')
-      expect(json['errors'][0]['name'][0]).to eq('already exists in corpus: Ibotta')
+      expect(json['errors'][0]['word'][0]).to eq('already exists in corpus: Ibotta')
     end
   end
 end

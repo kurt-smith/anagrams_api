@@ -21,7 +21,7 @@ class WordsController < ApplicationController
     @errors = []
 
     @words = word_list.each_with_object([]) do |word, arr|
-      w = Word.new(name: word)
+      w = Corpus.new(word: word)
 
       if w.valid?
         arr << w
@@ -56,7 +56,7 @@ class WordsController < ApplicationController
   # request_url:: /words
   # @return [JSON] Deleted records
   def destroy_all
-    render status: 204 if Word.destroy_all
+    render status: 204 if Corpus.destroy_all
   end
 
   private

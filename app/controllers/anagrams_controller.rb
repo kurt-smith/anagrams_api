@@ -13,8 +13,8 @@ class AnagramsController < ApplicationController
   # @return [JSON] List of created records
   # TODO Add pagination
   def show
-    query = Word.anagrams(params[:word_name].strip)
-    @anagrams = query.limit(request_params[:limit]).sort(name: request_params[:sort])
+    query = Corpus.anagrams(params[:word_name].strip)
+    @anagrams = query.limit(request_params[:limit]).sort(word: request_params[:sort])
     @meta = request_params.tap do |x|
       x[:total] = query.count
       x[:word] = params[:word_name]

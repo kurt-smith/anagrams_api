@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :word do
-    name { Faker::Hipster.unique.word }
+  factory :corpus do
+    word { Faker::Hipster.unique.word }
   end
 
-  factory :word_request, class: Hash do
+  factory :corpus_request, class: Hash do
     words { [Faker::Hacker.unique.verb] }
 
     trait :multiple_words do
