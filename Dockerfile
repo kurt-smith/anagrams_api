@@ -9,9 +9,8 @@ ENV APP_HOME="/app" \
     GEMS="/usr/local/bundle" \
     ENTRY_POINT_DIR="docker-entrypoint-init.d" \
     RUBY_PACKAGES="ruby ruby-rdoc ruby-irb ruby-io-console ruby-json yaml ruby-rake ruby-bigdecimal nodejs" \
-    DEV_PACKAGES="zlib-dev libxml2-dev ruby-dev libxslt-dev tzdata yaml-dev libstdc++ bash ca-certificates" \
-    BUILD_PACKAGES="build-base openssl-dev libc-dev linux-headers git" \
-    NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    DEV_PACKAGES="zlib-dev ruby-dev libxml2-dev libxslt-dev tzdata yaml-dev libstdc++ bash ca-certificates less" \
+    BUILD_PACKAGES="build-base openssl-dev libc-dev linux-headers git"
 
 RUN apk update && apk --update add $DEV_PACKAGES $RUBY_PACKAGES
 
@@ -30,5 +29,8 @@ WORKDIR $APP_HOME
 ADD . $APP_HOME
 
 EXPOSE 3000
+
+# Remove any previous server pids
+CMD ["sudo", "rm", "tmp/pids/server.pid"]
 
 CMD ["rails", "s", "-p", "3000", "-b", "0.0.0.0"]

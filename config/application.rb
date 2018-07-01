@@ -26,6 +26,8 @@ module App
     DB_WAIT_QUEUE_TIMEOUT = ENV.fetch('DB_WAIT_QUEUE_TIMEOUT') { 5 }
     DB_CONNECT_TIMEOUT = ENV.fetch('DB_CONNECT_TIMEOUT') { 10 }
     DB_SOCKET_TIMEOUT = ENV.fetch('DB_SOCKET_TIMEOUT') { 5 }
+    REDIS_CACHE_URL = ENV.fetch('REDIS_CACHE_URL') { 'redis://localhost:6379/0' }
+    REDIS_WORKER_URL = ENV.fetch('REDIS_WORKER_URL') { 'redis://localhost:6379/1' }
   end
 
   class Application < Rails::Application
