@@ -5,5 +5,5 @@
 production:
   :concurrency: 10 # heroku free-tier limit: 10
 :queues:
-  - words
+  - corpus
   - default

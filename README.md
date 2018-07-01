@@ -1,5 +1,10 @@
-# Ibotta Anagram Project
+Ibotta Anagram Project
+=========
 
+#### Ruby 2.4.4
+#### Rails 5.1.6
+
+---
 The project is to build an API that allows fast searches for [anagrams](https://en.wikipedia.org/wiki/Anagram). `dictionary.txt` is a text file containing every word in the English dictionary. Ingesting the file doesn’t need to be fast, and you can store as much data in memory as you like.
 
 The API you design should respond on the following endpoints as specified.
@@ -29,6 +34,7 @@ This service has dependencies on the following services:
 1. Ruby `2.4.4`
 1. MongoDB
 1. Redis
+1. Sidekiq
 
 ### Docker
 Follow the Docker [Getting Started](https://docs.docker.com/get-started/) guide to get `docker` and `docker-compose`.  This project contains helper scripts to build and test services.
@@ -39,11 +45,25 @@ Follow the Docker [Getting Started](https://docs.docker.com/get-started/) guide 
 To start the application using docker compose locally:
 
 1. Start the services: `$ docker-compose up --build`
-1. Access via browser: `$ open http://localhost:3000/hello`
+1. Access Sidekiq via browser: `$ open http://localhost:3000/sidekiq`
+
+### Local development (without Docker)
+To start the application from project folder:
+
+1. Start Redis: `$ redis-server`
+1. Start Sidekiq: `$ bundle exec sidekiq`
+1. Start App: `$ rails s`
+1. Access Sidekiq via browser: `$ open http://localhost:3000/sidekiq`
 
 ### Environment Variables
 
 | Variable       |  Description   | Default                 |
 | ---------------|:---------------|:-----------------------:|
-| `APP_NAME`     | App name       |                         |
-| `MONGODB_URI`  | Mongo DB URI   | mongodb://localhost:27017/anagrams_development |
+| `MONGODB_URI`  | MongoDB URI   | mongodb://localhost:27017/anagrams_development |
+| `REDIS_CACHE_URL`  | Redis Cache URL   | redis://localhost:6379/0 |
+| `REDIS_WORKER_URL`  | Redis Worker URL  | redis://localhost:6379/1 |
+| `DB_MAX_CONNECTIONS`  | Mongo Max Connections  | 16 |
+| `DB_MIN_CONNECTIONS`  | Mongo Min Connections | 5 |
+| `DB_WAIT_QUEUE_TIMEOUT`  | DB Queue Timeout  | 5 |
+| `DB_CONNECT_TIMEOUT`  | DB Connection Timeout  | 10 |
+| `DB_SOCKET_TIMEOUT`  | DB Socket Timeout | 5 |

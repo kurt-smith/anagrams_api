@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+
   resources :words, only: %i[create destroy], param: :word_name do
     collection do
       delete '', to: 'words#destroy_all', as: :all

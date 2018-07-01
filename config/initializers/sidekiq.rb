@@ -7,6 +7,9 @@ sidekiq_config = {
 
 Sidekiq.configure_server do |config|
   config.redis = sidekiq_config
+
+  database_url = ENV.fetch('MONGODB_URI') { "mongodb://localhost:27017/anagrams_#{Rails.env}" }
+  ENV['DATABASE_URL'] = "#{database_url}?pool=10" if database_url.present?
 end
 
 Sidekiq.configure_client do |config|
