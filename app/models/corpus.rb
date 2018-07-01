@@ -25,6 +25,8 @@ class Corpus
 
   validates :characters, presence: { message: 'is required' }
 
+  validate :valid_word?
+
   before_validation :default_values
 
   # Sort characters to store in ascending order
@@ -37,6 +39,10 @@ class Corpus
   end
 
   private
+
+  def valid_word?
+    errors.add(:word, 'must be a valid English-language word') unless Dictionary::Words.include?(word)
+  end
 
   # Sets default values prior to validation
   def default_values
