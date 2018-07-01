@@ -3,6 +3,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  root to: 'anagrams#root', via: :all
+
   mount Sidekiq::Web => '/sidekiq'
 
   resources :words, only: %i[create destroy], param: :word_name do

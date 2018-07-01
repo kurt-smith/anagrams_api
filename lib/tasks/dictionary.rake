@@ -11,9 +11,7 @@ namespace :dictionary do
     Rails.logger.debug(message: 'Seeding Corpus from dictionary', limit: limit)
 
     begin
-      file = Rails.root.join('vendor', 'dictionary', 'dictionary.txt.gz')
-      dictionary = Zlib::GzipReader.open(file, &:read).split(/\n/)
-      words = limit.eql?(0) ? dictionary : dictionary.first(limit)
+      words = limit.eql?(0) ? Dictionary::Words : Dictionary::Words.first(limit)
       words.each { |word| CorpusWorker.perform_async(word: word) }
     rescue StandardError => e
       Rails.logger.error(error: 'Error encountered during dictionary seed task', message: e.message)

@@ -45,7 +45,7 @@ describe 'Words Create API', type: :request, requests: true do
       expect(Corpus.count).to eq(1)
     end
 
-    it 'returns 201 when captialized duplicate word exist (case sensitive)' do
+    xit 'returns 201 when captialized duplicate word exist (case sensitive)' do
       FactoryBot.create(:corpus, word: 'Ibotta')
       params = FactoryBot.build(:corpus_request, words: %w[ibotta cash back rewards])
 
@@ -67,12 +67,12 @@ describe 'Words Create API', type: :request, requests: true do
     end
 
     it 'returns 422 when word already exists' do
-      FactoryBot.create(:corpus, word: 'Ibotta')
-      params = FactoryBot.build(:corpus_request, words: %w[Ibotta cash back rewards])
+      FactoryBot.create(:corpus, word: 'read')
+      params = FactoryBot.build(:corpus_request, words: %w[read dare dear])
       post path, params: params.to_json, headers: headers
       expect(response).to have_http_status 422
       expect(json.keys).to include('errors')
-      expect(json['errors'][0]['word'][0]).to eq('already exists in corpus: Ibotta')
+      expect(json['errors'][0]['word'][0]).to eq('already exists in corpus: read')
     end
   end
 end

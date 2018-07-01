@@ -6,22 +6,22 @@ describe CorpusWorker, type: :worker do
   it { expect { subject.send(:validate_options!, nil) }.to raise_error(ArgumentError, 'word required') }
 
   context '#perform' do
+    let(:word) { FactoryBot.build(:corpus) }
+
     it 'persists word' do
       expect(Corpus.count).to eq(0)
-      Sidekiq::Testing.inline! { subject.perform(word: 'Ibotta') }
+      Sidekiq::Testing.inline! { subject.perform(word: word[:word]) }
       expect(Corpus.count).to eq(1)
 
       word = Corpus.first
-      expect(word[:word]).to eq('Ibotta')
-      expect(word[:proper_noun]).to eq(true)
-      expect(word[:characters]).to eq('abiott')
+      expect(word[:word]).to eq(word[:word])
     end
 
     it 'raises error and does not process if word exists in corpus' do
-      FactoryBot.create(:corpus, word: 'Ibotta')
+      word.save
       expect(Corpus.count).to eq(1)
       Sidekiq::Testing.inline! do
-        expect { subject.perform(word: 'Ibotta') }.to raise_error(StandardError)
+        expect { subject.perform(word: word[:word]) }.to raise_error(StandardError)
       end
     end
   end

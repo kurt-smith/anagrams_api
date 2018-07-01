@@ -29,8 +29,8 @@ describe Corpus, models: true do
 
   describe '#sort_characters' do
     it 'sorts characters in ascending order' do
-      word = FactoryBot.build(:corpus, word: 'Ibotta')
-      expect(word.sort_characters).to eq('abiott')
+      word = FactoryBot.build(:corpus, word: 'radar')
+      expect(word.sort_characters).to eq('aadrr')
     end
 
     it 'removes non-alphabet characters' do
