@@ -16,6 +16,7 @@ The API you design should respond on the following endpoints as specified.
 - `DELETE /words/:word.json`: Deletes a single word from the data store.
 - `DELETE /words.json`: Deletes all contents of the data store.
 
+*Note: This project is a work in progress*
 
 **Optional**
 - Endpoint that returns a count of words in the corpus and min/max/median/average word length
@@ -24,8 +25,6 @@ The API you design should respond on the following endpoints as specified.
 - Endpoint that takes a set of words and returns whether or not they are all anagrams of each other
 - Endpoint to return all anagram groups of size >= *x*
 - Endpoint to delete a word *and all of its anagrams*
-
-*Note: This project is a work in progress*
 
 ### Dependencies
 
@@ -54,6 +53,26 @@ To start the application from project folder:
 1. Start Sidekiq: `$ bundle exec sidekiq`
 1. Start App: `$ rails s`
 1. Access Sidekiq via browser: `$ open http://localhost:3000/sidekiq`
+
+### Database
+
+#### Create Indexes
+
+A rake task needs to be executed the first time the project is set up in order to create Mongo indexes.
+
+1. `docker-compose run app rake db:create_indexes` (Docker)
+1. `rake db:create_indexes` (Local)
+
+#### Seed Database
+
+A rake task was created in order to seed the database with the provided `dictionary.txt.gz` file.
+This task is designed to use Sidekiq to enqueue and process the dictionary in ascending order.
+
+*Note: The default word limit is **1_000***
+
+1. `docker-compose run app rake dictionary:enqueue` (Docker)
+1. `rake dictionary:enqueue` (Local)
+1. `rake dictionary:enqueue\[50\]` (First 50 words)
 
 ### Testing
 
