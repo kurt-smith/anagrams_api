@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   before_action :set_default_request_format
+  respond_to :json
   protect_from_forgery with: :null_session, if: proc { |c| c.request.format =~ %r{application/json} }
 
   def raise_not_found!

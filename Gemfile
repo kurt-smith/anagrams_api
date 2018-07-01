@@ -8,6 +8,7 @@ gem 'mongoid_paranoia', '~> 0.3'
 gem 'puma', '~> 3.11'
 gem 'rails', '5.1.6'
 gem 'redis', '~> 4.0'
+gem 'responders', '~> 2.4'
 gem 'sidekiq', '~> 5.1'
 
 group :development, :test do
