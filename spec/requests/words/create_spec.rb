@@ -32,7 +32,7 @@ describe 'Words Create API', type: :request, requests: true do
       expect(json['words'].first.keys).to contain_exactly(*JsonKeyHelper.word)
     end
 
-    it 'and persists unique words and returns 201' do
+    it 'persists unique words and returns 201' do
       params = {
         words: %w[unique unique]
       }
@@ -43,6 +43,19 @@ describe 'Words Create API', type: :request, requests: true do
       expect(json['words'].count).to eq(1)
       expect(json['words'].first.keys).to contain_exactly(*JsonKeyHelper.word)
       expect(Corpus.count).to eq(1)
+    end
+
+    it 'returns 201 when captialized duplicate word exist (case sensitive)' do
+      FactoryBot.create(:corpus, word: 'Ibotta')
+      params = FactoryBot.build(:corpus_request, words: %w[ibotta cash back rewards])
+
+      post path, params: params.to_json, headers: headers
+      expect(response).to have_http_status 201
+      expect(json.keys).to_not include('errors')
+      expect(json.keys).to contain_exactly(*JsonKeyHelper.words)
+      expect(json['words'].count).to eq(4)
+      expect(json['words'].first.keys).to contain_exactly(*JsonKeyHelper.word)
+      expect(Corpus.count).to eq(5)
     end
 
     it 'returns 422 when not array' do
