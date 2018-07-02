@@ -2,6 +2,7 @@ Ibotta Anagram Project
 =========
 
 Live demo available at: https://ibotta-anagrams-api.herokuapp.com/
+Sidekiq UI: https://ibotta-anagrams-api.herokuapp.com/sidekiq
 
 #### Ruby 2.4.4
 #### Rails 5.1.6
