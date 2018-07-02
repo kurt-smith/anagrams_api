@@ -12,6 +12,9 @@ class CorpusWorker
     validate_options!(options)
     word = Corpus.new(word: options[:word])
     word.save! if word.valid?
+  rescue Mongo::Error::OperationFailure => e
+    Sidekiq.logger.info(error: 'Mongo error encountered', message: e.message, word: options[:word])
+    Corpus.unscoped.find_by(word: options[:word]).restore if e.message.include?('duplicate key error index')
   end
 
   protected
