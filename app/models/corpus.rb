@@ -38,6 +38,13 @@ class Corpus
     nil
   end
 
+  # used to save or restore a previously deleted document
+  def save_or_restore
+    save!
+  rescue Mongo::Error::OperationFailure => e
+    Corpus.unscoped.find_by(word: options[:word]).restore if e.message.include?('duplicate key error index')
+  end
+
   private
 
   def valid_word?
