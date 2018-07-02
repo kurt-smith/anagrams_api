@@ -2,6 +2,7 @@
 
 class WordsController < ApplicationController
   before_action :load_word, only: %i[destroy]
+  before_action :validate_content_type, only: %i[create]
 
   # Creates provided unique words
   # method:: POST
@@ -63,5 +64,10 @@ class WordsController < ApplicationController
 
   def word_params
     params.permit(words: [])
+  end
+
+  def validate_content_type
+    return if request.content_type.match?('application/json')
+    errors(['invalid Content-Type: application/json required'], 415)
   end
 end

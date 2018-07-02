@@ -26,18 +26,12 @@ POST JSON data of English-language words and adds them to the corpus
   {
     "words": [
       {
-        "id":"5b3951b71e540b000185a941",
         "word":"read",
-        "proper_noun":false,
-        "created_at":"2018-07-01T22:12:07Z",
-        "updated_at":"2018-07-01T22:12:07Z"
+        "proper_noun":false
       },
       {
-        "id":"5b3951b71e540b000185a942",
         "word":"dear",
-        "proper_noun":false,
-        "created_at":"2018-07-01T22:12:07Z",
-        "updated_at":"2018-07-01T22:12:07Z"
+        "proper_noun":false
       }
     ]
   }
@@ -67,6 +61,19 @@ Return a JSON array of English-language words that are anagrams of the word pass
       "word":"read"
     },
     "anagrams":[ "dare","dear" ]
+  }
+
+  curl -i https://ibotta-anagrams-api.herokuapp.com/anagram/read?limit=1
+
+  {
+    "meta":{
+      "limit":1,
+      "offset":1,
+      "sort":"asc",
+      "total":2,
+      "word":"read"
+    },
+    "anagrams":[ "dare" ]
   }
 ```
 
