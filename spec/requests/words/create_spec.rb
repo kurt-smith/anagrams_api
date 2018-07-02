@@ -45,17 +45,18 @@ describe 'Words Create API', type: :request, requests: true do
       expect(Corpus.count).to eq(1)
     end
 
-    xit 'returns 201 when captialized duplicate word exist (case sensitive)' do
-      FactoryBot.create(:corpus, word: 'Ibotta')
-      params = FactoryBot.build(:corpus_request, words: %w[ibotta cash back rewards])
+    it 'returns 201 when restoring soft deleted word' do
+      corpus = FactoryBot.create(:corpus)
+      corpus.destroy
+
+      params = FactoryBot.build(:corpus_request, words: [corpus[:word]])
 
       post path, params: params.to_json, headers: headers
       expect(response).to have_http_status 201
       expect(json.keys).to_not include('errors')
       expect(json.keys).to contain_exactly(*JsonKeyHelper.words)
-      expect(json['words'].count).to eq(4)
-      expect(json['words'].first.keys).to contain_exactly(*JsonKeyHelper.word)
-      expect(Corpus.count).to eq(5)
+      expect(json['words'][0].keys).to contain_exactly(*JsonKeyHelper.word)
+      expect(json['words'][0]['word']).to eq(corpus[:word])
     end
 
     it 'returns 422 when not array' do

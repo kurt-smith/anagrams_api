@@ -21,7 +21,7 @@ describe CorpusWorker, type: :worker do
       word.save
       expect(Corpus.count).to eq(1)
       Sidekiq::Testing.inline! do
-        expect { subject.perform(word: word[:word]) }.not_to raise_error(StandardError)
+        expect { subject.perform(word: word[:word]) }.not_to raise_error
       end
     end
   end

@@ -39,10 +39,14 @@ class Corpus
   end
 
   # used to save or restore a previously deleted document
-  def save_or_restore
+  def save_or_restore!
     save!
   rescue Mongo::Error::OperationFailure => e
-    Corpus.unscoped.find_by(word: options[:word]).restore if e.message.include?('duplicate key error index')
+    if e.message.include?('duplicate key error')
+      Corpus.unscoped.find_by(word: word).restore
+    else
+      raise e
+    end
   end
 
   private

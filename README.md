@@ -2,7 +2,10 @@ Ibotta Anagram Project
 =========
 
 Live demo available at: https://ibotta-anagrams-api.herokuapp.com/
+
 Sidekiq UI: https://ibotta-anagrams-api.herokuapp.com/sidekiq
+
+*NOTE:* This app is hosted on Heroku free tier and will take a couple seconds to spin up and respond if inactive for 30 minutes.
 
 #### Ruby 2.4.4
 #### Rails 5.1.6
@@ -51,7 +54,7 @@ POST JSON data of English-language words and adds them to the corpus
 
 Return a JSON array of English-language words that are anagrams of the word passed in the URL.
 ```
-  curl -i https://ibotta-anagrams-api.herokuapp.com/anagram/read
+  curl -i https://ibotta-anagrams-api.herokuapp.com/anagrams/read
 
   {
     "meta":{
@@ -64,7 +67,8 @@ Return a JSON array of English-language words that are anagrams of the word pass
     "anagrams":[ "dare","dear" ]
   }
 
-  curl -i https://ibotta-anagrams-api.herokuapp.com/anagram/read?limit=1
+  # With limit param. NOTE: Pagination not implemented yet
+  curl -i https://ibotta-anagrams-api.herokuapp.com/anagrams/read?limit=1
 
   {
     "meta":{
@@ -80,14 +84,14 @@ Return a JSON array of English-language words that are anagrams of the word pass
 
 Delete a single word from the data store.
 ```
-  curl -i -X DELETE http://localhost:3000/words/read
+  curl -i -X DELETE https://ibotta-anagrams-api.herokuapp.com/words/read
 
   HTTP/1.1 204 No Content
 ```
 
 Delete all contents of the data store.
 ```
-  curl -i -X DELETE http://localhost:3000/words
+  curl -i -X DELETE https://ibotta-anagrams-api.herokuapp.com/words
 
   HTTP/1.1 204 No Content
 ```

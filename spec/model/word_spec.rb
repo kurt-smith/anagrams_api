@@ -76,4 +76,20 @@ describe Corpus, models: true do
       expect(word.save!).to be_truthy
     end
   end
+
+  describe '#save_or_restore!' do
+    let(:corpus) { FactoryBot.build(:corpus, word: 'read') }
+
+    it 'restores soft deleted word' do
+      corpus.save
+      expect(Corpus.where(word: corpus[:word]).count).to eq(1)
+      corpus.destroy
+      expect(Corpus.where(word: corpus[:word]).count).to eq(0)
+
+      c = Corpus.new(word: corpus[:word])
+      expect(c.valid?).to be_truthy
+      expect(c.save_or_restore!).to be_truthy
+      expect(Corpus.where(word: corpus[:word]).count).to eq(1)
+    end
+  end
 end

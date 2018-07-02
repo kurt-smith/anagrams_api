@@ -32,7 +32,7 @@ class WordsController < ApplicationController
     end
 
     return errors(@errors, 422) if @errors.present?
-    render status: 201 if @words.each(&:save_or_restore)
+    render status: 201 if @words.each(&:save_or_restore!)
   end
 
   # Deletes word param
