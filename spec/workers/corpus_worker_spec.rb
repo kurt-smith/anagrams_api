@@ -17,11 +17,11 @@ describe CorpusWorker, type: :worker do
       expect(word[:word]).to eq(word[:word])
     end
 
-    it 'raises error and does not process if word exists in corpus' do
+    it 'doesn\'t raises error and does not process if word exists in corpus' do
       word.save
       expect(Corpus.count).to eq(1)
       Sidekiq::Testing.inline! do
-        expect { subject.perform(word: word[:word]) }.to raise_error(StandardError)
+        expect { subject.perform(word: word[:word]) }.not_to raise_error(StandardError)
       end
     end
   end
