@@ -5,8 +5,13 @@ require_relative 'boot'
 require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
+# require 'active_job/railtie'
+# require "active_record/railtie"
 require 'action_controller/railtie'
+# require 'action_mailer/railtie'
 require 'action_view/railtie'
+# require 'action_cable/engine'
+# require 'sprockets/railtie'
 require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
@@ -15,7 +20,7 @@ Bundler.require(*Rails.groups)
 
 module App
   module Config
-    APP_NAME = 'ibotta_anagrams'
+    APP_NAME = 'anagrams_api'
     MONGODB_URI = ENV.fetch('MONGODB_URI') { "mongodb://localhost:27017/anagrams_#{Rails.env}" }
     DB_MAX_CONNECTIONS = ENV.fetch('DB_MAX_CONNECTIONS') { 16 }
     DB_MIN_CONNECTIONS = ENV.fetch('DB_MIN_CONNECTIONS') { 5 }

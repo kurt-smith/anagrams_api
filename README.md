@@ -1,9 +1,9 @@
-Ibotta Anagram Project
+Anagram API Project
 =========
 
-Live demo available at: https://ibotta-anagrams-api.herokuapp.com/
+Live demo available at: https://aaagmnrs-api.herokuapp.com/
 
-Sidekiq UI: https://ibotta-anagrams-api.herokuapp.com/sidekiq
+Sidekiq UI: https://aaagmnrs-api.herokuapp.com/sidekiq
 
 *NOTE:* This app is hosted on Heroku free tier and will take a couple seconds to spin up and respond if inactive for 30 minutes.
 
@@ -15,17 +15,17 @@ The project is to build an API that allows fast searches for [anagrams](https://
 
 ### Endpoints
 ```
-  curl https://ibotta-anagrams-api.herokuapp.com/
+  curl https://aaagmnrs-api.herokuapp.com/
 
   {
-    "app": "ibotta_anagrams",
+    "app": "anagrams_api",
     "description": "API that allows fast searches for anagrams."
   }
 ```
 
 POST JSON data of English-language words and adds them to the corpus
 ```
-  curl -i -H 'Content-Type:application/json' -X POST -d '{ "words": ["read", "dear"] }' https://ibotta-anagrams-api.herokuapp.com/words
+  curl -i -H 'Content-Type:application/json' -X POST -d '{ "words": ["read", "dear"] }' https://aaagmnrs-api.herokuapp.com/words
 
   {
     "words": [
@@ -41,7 +41,7 @@ POST JSON data of English-language words and adds them to the corpus
   }
 
   # An error is expected if the word exists in the corpus
-  curl -i -H 'Content-Type:application/json' -X POST -d '{ "words": ["read"] }' https://ibotta-anagrams-api.herokuapp.com/words
+  curl -i -H 'Content-Type:application/json' -X POST -d '{ "words": ["read"] }' https://aaagmnrs-api.herokuapp.com/words
 
   {
     "errors": [
@@ -54,7 +54,7 @@ POST JSON data of English-language words and adds them to the corpus
 
 Return a JSON array of English-language words that are anagrams of the word passed in the URL.
 ```
-  curl -i https://ibotta-anagrams-api.herokuapp.com/anagrams/read
+  curl -i https://aaagmnrs-api.herokuapp.com/anagrams/read
 
   {
     "meta":{
@@ -68,7 +68,7 @@ Return a JSON array of English-language words that are anagrams of the word pass
   }
 
   # With limit param. NOTE: Pagination not implemented yet
-  curl -i https://ibotta-anagrams-api.herokuapp.com/anagrams/read?limit=1
+  curl -i https://aaagmnrs-api.herokuapp.com/anagrams/read?limit=1
 
   {
     "meta":{
@@ -84,14 +84,14 @@ Return a JSON array of English-language words that are anagrams of the word pass
 
 Delete a single word from the data store.
 ```
-  curl -i -X DELETE https://ibotta-anagrams-api.herokuapp.com/words/read
+  curl -i -X DELETE https://aaagmnrs-api.herokuapp.com/words/read
 
   HTTP/1.1 204 No Content
 ```
 
 Delete all contents of the data store.
 ```
-  curl -i -X DELETE https://ibotta-anagrams-api.herokuapp.com/words
+  curl -i -X DELETE https://aaagmnrs-api.herokuapp.com/words
 
   HTTP/1.1 204 No Content
 ```

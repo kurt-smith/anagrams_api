@@ -37,7 +37,7 @@ services:
 
   app:
     build: .
-    image: ibotta_anagrams
+    image: anagrams_api
     volumes:
       - .:/app
     ports:
@@ -47,7 +47,7 @@ services:
       - redis
     environment:
       MONGODB_URI: mongodb://mongo:27017/anagrams_development
-      COMPOSE_PROJECT_NAME: ibotta_anagrams
+      COMPOSE_PROJECT_NAME: anagrams_api
       REDIS_CACHE_URL: redis://redis:6379/0
       REDIS_WORKER_URL: redis://redis:6379/1
 

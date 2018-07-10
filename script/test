@@ -8,7 +8,7 @@ set -e
 # cd to project root
 cd "$(dirname "$0")/.."
 
-export RAILS_ENV="test" RACK_ENV="test" PROJECT_NAME="ibotta_anagrams"
+export RAILS_ENV="test" RACK_ENV="test" PROJECT_NAME="anagrams_api"
 
 # Create Indexes
 printf "\n===> Creating indexes ...\n"
